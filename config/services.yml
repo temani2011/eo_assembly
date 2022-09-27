@@ -1,0 +1,159 @@
+services:
+    assembly.repository:
+        class: EO\Assembly\Repository\AssemblyRepository
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@translator'
+
+    # Category
+    assembly.grid.definition.factory.assembly:
+        class: 'EO\Assembly\Grid\Definition\Factory\AssemblyGridDefinitionFactory'
+        parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+
+    assembly.grid.query_builder.assembly:
+        class: 'EO\Assembly\Grid\Query\AssemblyQueryBuilder'
+        parent: 'prestashop.core.grid.abstract_query_builder'
+        public: true
+        arguments:
+            - '@prestashop.core.query.doctrine_search_criteria_applicator'
+            - "@=service('prestashop.adapter.legacy.context').getContext().language.id"
+            - "@=service('prestashop.adapter.legacy.context').getContext().shop.id"
+            - "@=service('prestashop.adapter.legacy.context').getContext().shop.id_shop_group"
+            - '@prestashop.adapter.legacy.configuration'
+
+    assembly.grid.data_provider.assembly:
+        class: '%prestashop.core.grid.data.factory.doctrine_grid_data_factory%'
+        arguments:
+            - '@assembly.grid.query_builder.assembly'
+            - '@prestashop.core.hook.dispatcher'
+            - '@prestashop.core.grid.query.doctrine_query_parser'
+            - 'assembly'
+
+    assembly.grid.factory.assembly:
+        class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+        public: true
+        arguments:
+            - '@assembly.grid.definition.factory.assembly'
+            - '@assembly.grid.data_provider.assembly'
+            - '@prestashop.core.grid.filter.form_factory'
+            - '@prestashop.core.hook.dispatcher'
+
+    assembly.form.data_provider:
+        class: EO\Assembly\Form\AssemblyFormDataProvider
+        arguments:
+            - '@assembly.repository'
+            - '@prestashop.core.admin.module.repository'
+
+    assembly.form_handler:
+        class: 'PrestaShop\PrestaShop\Core\Form\FormHandler'
+        arguments:
+            $formBuilder: '@=service("form.factory").createBuilder()'
+            $hookDispatcher: '@prestashop.core.hook.dispatcher'
+            $formDataProvider: '@assembly.form.data_provider'
+            $formTypes:
+                'assembly': 'EO\Assembly\Form\Type\AssemblyType'
+            $hookName: 'AdminAssemblyWidget'
+
+    assembly.form_type.assembly:
+        class: EO\Assembly\Form\Type\AssemblyType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
+
+    # Features
+    assembly.grid.factory.assembly_features:
+        class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+        public: true
+        arguments:
+            - '@assembly.grid.definition.factory.assembly_features'
+            - '@assembly.grid.data_provider.assembly'
+            - '@prestashop.core.grid.filter.form_factory'
+            - '@prestashop.core.hook.dispatcher'
+
+    assembly.grid.definition.factory.assembly_features:
+        class: 'EO\Assembly\Grid\Definition\Factory\AssemblyFeaturesGridDefinitionFactory'
+        parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+
+    assembly.form.data_provider.assembly_features:
+        class: EO\Assembly\Form\AssemblyFeaturesFormDataProvider
+        arguments:
+            - '@assembly.repository'
+            - '@prestashop.core.admin.module.repository'
+
+    assembly.form_handler.assembly_features:
+        class: 'PrestaShop\PrestaShop\Core\Form\FormHandler'
+        arguments:
+            $formBuilder: '@=service("form.factory").createBuilder()'
+            $hookDispatcher: '@prestashop.core.hook.dispatcher'
+            $formDataProvider: '@assembly.form.data_provider.assembly_features'
+            $formTypes:
+                'assembly': 'EO\Assembly\Form\Type\AssemblyFeaturesType'
+            $hookName: 'AdminAssemblyWidget'
+
+    assembly.form_type.assembly_features:
+        class: EO\Assembly\Form\Type\AssemblyFeaturesType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
+
+    # Porducts
+    assembly.grid.factory.assembly_products:
+        class: 'PrestaShop\PrestaShop\Core\Grid\GridFactory'
+        public: true
+        arguments:
+            - '@assembly.grid.definition.factory.assembly_products'
+            - '@assembly.grid.data_provider.assembly'
+            - '@prestashop.core.grid.filter.form_factory'
+            - '@prestashop.core.hook.dispatcher'
+
+    assembly.grid.data.factory.product_data_factory:
+        class: 'PrestaShop\PrestaShop\Core\Grid\Data\Factory\DoctrineGridDataFactory'
+        arguments:
+            - '@assembly.grid.query_builder.assembly' # service id of our query builder
+            - '@prestashop.core.hook.dispatcher' # every doctrine query builder needs the hook dispatcher
+            - '@prestashop.core.grid.query.doctrine_query_parser' # parser to get the raw SQL query
+            - 'products' # this should match your grid id, in our case it's "products"
+
+    assembly.grid.definition.factory.assembly_products:
+        class: 'EO\Assembly\Grid\Definition\Factory\AssemblyProductsGridDefinitionFactory'
+        parent: 'prestashop.core.grid.definition.factory.abstract_grid_definition'
+
+    assembly.form.data_provider.assembly_products:
+        class: EO\Assembly\Form\AssemblyProductsFormDataProvider
+        arguments:
+            - '@assembly.repository'
+            - '@prestashop.core.admin.module.repository'
+
+    assembly.form_handler.assembly_products:
+        class: 'PrestaShop\PrestaShop\Core\Form\FormHandler'
+        arguments:
+            $formBuilder: '@=service("form.factory").createBuilder()'
+            $hookDispatcher: '@prestashop.core.hook.dispatcher'
+            $formDataProvider: '@assembly.form.data_provider.assembly_products'
+            $formTypes:
+                'assembly': 'EO\Assembly\Form\Type\AssemblyProductsType'
+            $hookName: 'AdminAssemblyWidget'
+
+    assembly.form_type.assembly_products:
+        class: EO\Assembly\Form\Type\AssemblyProductsType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
+
+    assembly.form_type.feature:
+        class: EO\Assembly\Form\Type\FeatureType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
+
+    assembly.form_type.feature_value:
+        class: EO\Assembly\Form\Type\FeatureValueType
+        parent: 'form.type.translatable.aware'
+        public: true
+        tags:
+            - { name: form.type }
+

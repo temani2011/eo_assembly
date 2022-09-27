@@ -1,0 +1,156 @@
+# Category
+admin_assembly_list:
+    path: /assembly
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyController::indexAction'
+        _legacy_controller: AdminAssembly
+        _legacy_link: AdminAssembly
+
+admin_assembly_search:
+    path: /assembly
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyController::searchAction'
+        _legacy_controller: AdminAssembly
+        _legacy_link: AdminAssembly:search
+
+admin_assembly_category_edit:
+    path: /assembly/category/edit/{id}
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyController::editAction'
+        _legacy_controller: AdminAssembly
+        _legacy_link: AdminAssembly:editAction
+    requirements:
+        id: \d+
+
+admin_assembly_category_edit_process:
+    path: /assembly/category/edit/{id}
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyController::editProcessAction'
+        _legacy_controller: 'AdminAssembly'
+        _legacy_link: 'AdminAssembly:editProcess'
+    requirements:
+        id: \d+
+
+admin_assembly_category_toggle_crate:
+    path: /assembly/category/crate-toggle/{id}
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyController::toggleCrateAction'
+        _legacy_controller: 'AdminAssembly'
+        _legacy_link: 'AdminAssembly:toggleCrate'
+    requirements:
+        id: \d+
+
+# Features
+admin_assembly_features_list:
+    path: /assembly/features
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyFeaturesController::indexAction'
+        _legacy_controller: AdminAssemblyFeatures
+        _legacy_link: AdminAssemblyFeatures
+
+admin_assembly_features_search:
+    path: /assembly/features
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyFeaturesController::searchAction'
+        _legacy_controller: AdminAssemblyFeatures
+        _legacy_link: AdminAssemblyFeatures:search
+
+admin_assembly_features_edit:
+    path: /assembly/features/edit/{id}
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyFeaturesController::editAction'
+        _legacy_controller: AdminAssemblyFeatures
+        _legacy_link: AdminAssemblyFeatures:editAction
+    requirements:
+        id: \d+
+
+admin_assembly_features_edit_process:
+    path: /assembly/features/edit/{id}
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyFeaturesController::editProcessAction'
+        _legacy_controller: 'AdminAssemblyFeatures'
+        _legacy_link: 'AdminAssemblyFeatures:editProcess'
+    requirements:
+        id: \d+
+
+# Product
+admin_assembly_products_list:
+    path: /assembly/products
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::indexAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: AdminAssemblyProducts
+
+admin_assembly_products_timecustom:
+    path: /assembly/setAssemblyTimeCustom
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::setAssemblyTimeCustomAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: AdminAssemblyProducts
+
+admin_assembly_products_search:
+    path: /assembly/products
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::searchAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: AdminAssemblyProducts:search
+
+admin_assembly_products_edit:
+    path: /assembly/products/edit/{id}
+    methods: [GET]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::editAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: AdminAssemblyProducts:editAction
+    requirements:
+        id: \d+
+
+admin_assembly_products_edit_process:
+    path: /assembly/products/edit/{id}
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::editProcessAction'
+        _legacy_controller: 'AdminAssemblyProducts'
+        _legacy_link: 'AdminAssemblyProducts:editProcess'
+    requirements:
+        id: \d+
+
+admin_assembly_products_toggle_crate:
+    path: /assembly/products/crate-toggle/{id}
+    methods: [POST]
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::toggleCrateAction'
+        _legacy_controller: 'AdminAssemblyProducts'
+        _legacy_link: 'AdminAssemblyProducts:toggleCrate'
+    requirements:
+        id: \d+
+
+admin_assembly_products_bulk_enable_crate:
+    path: /assembly/products/bulk-crate-enable
+    methods: POST
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::bulkEnableCrateAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: 'AdminAssemblyProducts:bulkEnableCrate'
+
+
+admin_assembly_products_bulk_disable_crate:
+    path: /assembly/products/bulk-crate-disable
+    methods: POST
+    defaults:
+        _controller: 'EO\Assembly\Controller\Admin\AssemblyProductsController::bulkDisableCrateAction'
+        _legacy_controller: AdminAssemblyProducts
+        _legacy_link: 'AdminAssemblyProducts:bulkDisableCrate'
+
